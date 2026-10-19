@@ -1,3 +1,12 @@
+# === SECURITE & ENVIRONNEMENT (Ne jamais versionner) ===
+.env
+.env.*
+*.env
+
+# === FRONTEND (React / Node) ===
+node_modules/
+dist/
+build/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
