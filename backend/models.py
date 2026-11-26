@@ -1,7 +1,8 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, Float, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from database import Base
+
 
 class User(Base):
     __tablename__ = "users"
@@ -12,7 +13,6 @@ class User(Base):
     password_hash = Column(String(255), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
 
-    # Liens vers les pelotes et les patrons sauvegardés de cet utilisateur
     yarns = relationship("YarnStash", back_populates="owner", cascade="all, delete-orphan")
     saved_patterns = relationship("SavedPattern", back_populates="user", cascade="all, delete-orphan")
 
@@ -25,7 +25,7 @@ class YarnStash(Base):
     brand = Column(String(100), nullable=False)
     name = Column(String(100), nullable=False)
     material = Column(String(100), nullable=False)
-    weight_category = Column(String(50), nullable=False)  # ex: Sport, DK, Worsted
+    diameter_mm = Column(Float, nullable=False)          # Diamètre du fil en mm (ex: 3.0, 6.0)
     color_hex = Column(String(7), nullable=False)        # ex: #D96B43
     remaining_grams = Column(Integer, nullable=False)    # Poids restant pesé
     remaining_meters = Column(Integer, nullable=False)   # Métrage estimé
@@ -44,4 +44,3 @@ class SavedPattern(Base):
     status = Column(String(50), default="saved")
 
     user = relationship("User", back_populates="saved_patterns")
-    
